@@ -3,7 +3,7 @@ package juego.motor.personaje;
 import java.util.List;
 
 import juego.motor.batalla.BatallaObserver;
-//import juego.motor.batalla.GestorBatalla;
+import juego.motor.batalla.GestorBatalla;
 import juego.motor.hechizo.Hechizo;
 import juego.motor.item.Item;
 
@@ -17,9 +17,11 @@ public abstract class Personaje {
 	protected List<Hechizo> hechizosConocidos;
 	protected EfectoEstado estado;
 	protected BatallaObserver observer;
+	protected final GestorBatalla batalla;
 	
-	public Personaje() {
+	public Personaje(GestorBatalla batalla) {
 		this.estado = new EstadoNormal(this);
+		this.batalla = batalla;
 	}
 	
 	public void lanzarHechizo(Hechizo hechizo, Personaje objetivo) {
