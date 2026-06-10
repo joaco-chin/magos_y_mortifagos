@@ -1,6 +1,6 @@
 package juego.motor.personaje;
 
-public class EstadoResistencia extends EstadoNormal implements EfectosDurables{
+public class EstadoResistencia extends EfectoDurable{
 
 	public static final int FACTOR_REDUCCION_DMG = 2;
 	public static final double FACTOR_DECREMENTO_MAGIA = 0.1;	// 10%
@@ -10,7 +10,7 @@ public class EstadoResistencia extends EstadoNormal implements EfectosDurables{
 		super(personaje);
 		this.reduccion = EstadoResistencia.FACTOR_REDUCCION_DMG 
 				+ personaje.nivelMagia * EstadoResistencia.FACTOR_DECREMENTO_MAGIA;
-		this.duracionTurnos = EfectoEstado.DURACION_BASE_TURNOS;
+		this.duracionTurnos = EfectoDurable.DURACION_BASE_TURNOS;
 	}
 	
 	@Override

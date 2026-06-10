@@ -3,11 +3,11 @@ package juego.motor.personaje;
 import juego.motor.hechizo.Hechizo;
 import juego.motor.item.Item;
 
-public class EstadoCongelado extends EstadoNormal implements EfectosDurables{
+public class EstadoCongelado extends EfectoDurable{
 
 	public EstadoCongelado(Personaje personaje) {
 		super(personaje);
-		this.duracionTurnos = EfectoEstado.DURACION_BASE_TURNOS;
+		this.duracionTurnos = EfectoDurable.DURACION_BASE_TURNOS;
 	}
 	
 	@Override

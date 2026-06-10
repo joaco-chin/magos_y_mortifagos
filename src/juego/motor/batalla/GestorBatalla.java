@@ -2,21 +2,21 @@ package juego.motor.batalla;
 
 import java.util.List;
 
-import juego.motor.personaje.EfectosDurables;
+import juego.motor.personaje.EfectoDurable;
 
 public class GestorBatalla {
-	private List<EfectosDurables> listaEstados;
+	private List<EfectoDurable> listaEstados;
 	
-	public void agregarObserver(EfectosDurables observer) {
+	public void agregarObserver(EfectoDurable observer) {
 		listaEstados.add(observer);
 	}
 	
-	public void eliminarObserver(EfectosDurables observer) {
+	public void eliminarObserver(EfectoDurable observer) {
 		listaEstados.remove(observer);
 	}
 	
 	public void notificarObservers() {
-		for(EfectosDurables estado : listaEstados) {
+		for(EfectoDurable estado : listaEstados) {
 			estado.actualizar();
 		}
 	}
