@@ -6,7 +6,7 @@ public class Profesor extends Mago{
 
 	public Profesor(GestorBatalla batalla) {
 		super(batalla);
-//		this.hechizosConocidos.add(new Protego());
+//		this.hechizosConocidos.add(new crearHechizo("Protego"));
 	}
 
 	@Override
