@@ -1,16 +1,19 @@
 package juego.motor.personaje;
 
+import java.util.List;
+
 import juego.motor.batalla.GestorBatalla;
+import juego.motor.hechizo.Hechizo;
 
 public class Estudiante extends Mago{
-	public static final int NIVEL_MAGIA_ESTUDIANTE = 1;
-	public static final double MAX_VIDA_ESTUDIANTE = 95.5;
 	
-	public Estudiante(String nombre, GestorBatalla batalla) {
+	public Estudiante(String nombre, GestorBatalla batalla, List<Hechizo> hechizosConocidos,
+			int nivelMagia, double maxPuntosVida) {
 		super(nombre, batalla);
-		this.nivelMagia = NIVEL_MAGIA_ESTUDIANTE;
-		this.maxPuntosVida = MAX_VIDA_ESTUDIANTE;
-		this.puntosVida = this.maxPuntosVida; // El personaje comienza con la vida llena
+		this.hechizosConocidos = hechizosConocidos;
+		this.nivelMagia = nivelMagia;
+		this.maxPuntosVida = maxPuntosVida;
+		this.puntosVida = this.maxPuntosVida; 
 	}
 
 	@Override

@@ -3,7 +3,6 @@ package juego.motor.hechizo;
 import juego.motor.personaje.Personaje;
 
 public class ExpectoPatronum implements Hechizo {
-	
 	private double curacion;
 	
 	public ExpectoPatronum(double nivel) {
@@ -12,7 +11,7 @@ public class ExpectoPatronum implements Hechizo {
 	
 	@Override
 	public void ejecutar(Personaje personaje) {
-		personaje.curarse(curacion);;
+		personaje.curarse(curacion);
 	}
 	
 }

@@ -1,7 +1,7 @@
 package juego.motor.hechizo;
 
-public class HechizoFactory {
-	public Hechizo crearHechizo(String tipo, double nivel) {
+public abstract class HechizoFactory {
+	public static Hechizo crearHechizo(String tipo, double nivel) {
 		
 		if(tipo.equals("Expelliarmus")) {
 			return new Expelliarmus(nivel);
