@@ -11,7 +11,7 @@ public abstract class Personaje {
 	public static final int PUNTOS_DERROTA = 0;
 	
 	protected String nombre;
-	protected double nivelMagia;
+	protected int nivelMagia;
 	protected double puntosVida;
 	protected double maxPuntosVida;
 	protected List<Hechizo> hechizosConocidos;
