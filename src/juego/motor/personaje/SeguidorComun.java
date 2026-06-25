@@ -2,9 +2,9 @@ package juego.motor.personaje;
 
 import juego.motor.batalla.GestorBatalla;
 
-public class Profesor extends Mago{
-	
-	public Profesor(String nombre, GestorBatalla batalla) {
+public class SeguidorComun extends Mortifago{
+
+	public SeguidorComun(String nombre, GestorBatalla batalla) {
 		super(nombre, batalla);
 	}
 
@@ -12,5 +12,4 @@ public class Profesor extends Mago{
 	protected void notificarDerrota() {
 		// TODO Auto-generated method stub
 	}
-
 }

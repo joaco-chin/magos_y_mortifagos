@@ -5,9 +5,7 @@ import juego.motor.batalla.GestorBatalla;
 
 public abstract class Mago extends Personaje{
 	
-	public Mago(GestorBatalla batalla) {
-		super(batalla);
-//		this.hechizosConocidos.add(new Expecto Patronum());
-//		this.hechizosConocidos.add(new Expelliarmus());
+	public Mago(String nombre, GestorBatalla batalla) {
+		super(nombre, batalla);
 	}
 }

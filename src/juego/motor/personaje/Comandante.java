@@ -2,15 +2,15 @@ package juego.motor.personaje;
 
 import juego.motor.batalla.GestorBatalla;
 
-public class Profesor extends Mago{
+public class Comandante extends Mortifago{
 	
-	public Profesor(String nombre, GestorBatalla batalla) {
+	public Comandante(String nombre, GestorBatalla batalla) {
 		super(nombre, batalla);
 	}
 
 	@Override
 	protected void notificarDerrota() {
-		// TODO Auto-generated method stub
+		
 	}
 
 }

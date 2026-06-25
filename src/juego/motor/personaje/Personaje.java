@@ -19,7 +19,8 @@ public abstract class Personaje {
 	protected BatallaObserver observer;
 	protected final GestorBatalla batalla;
 	
-	public Personaje(GestorBatalla batalla) {
+	public Personaje(String nombre, GestorBatalla batalla) {
+		this.nombre = nombre;
 		this.estado = new EstadoNormal(this);
 		this.batalla = batalla;
 	}
