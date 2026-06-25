@@ -5,9 +5,9 @@ import java.util.List;
 import juego.motor.batalla.GestorBatalla;
 import juego.motor.hechizo.Hechizo;
 
-public class Profesor extends Mago{
+public class Comandante extends Mortifago{
 	
-	public Profesor(String nombre, GestorBatalla batalla, List<Hechizo> hechizosConocidos,
+	public Comandante(String nombre, GestorBatalla batalla, List<Hechizo> hechizosConocidos,
 			int nivelMagia, double maxPuntosVida) {
 		super(nombre, batalla);
 		this.hechizosConocidos = hechizosConocidos;
@@ -18,7 +18,7 @@ public class Profesor extends Mago{
 
 	@Override
 	protected void notificarDerrota() {
-		// TODO Auto-generated method stub
+		
 	}
 
 }
