@@ -1,29 +1,21 @@
 package juego.motor.personaje;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import juego.motor.batalla.GestorBatalla;
-import juego.motor.config.ConfigPersonajes;
-import juego.motor.hechizo.*;
 
 public class Reclutador {
-	MortifagoFactory creadorMortifago;
 	
-	public static Mago crearMago(String clase, GestorBatalla batalla) {
+	public static Mago crearMago(String tipo, GestorBatalla batalla) 
+			throws IllegalArgumentException{
 		MagoFactory creadorMago;
-		
-		if(clase == "Estudiante") {
-			creadorMago = new EstudianteFactory();
-		}
-		
-		else if(clase == "Profesor") {
-			creadorMago = new ProfesorFactory();
-		}
-		else if(clase == "Auror") {
-			creadorMago = new AurorFactory();
-		}
-		
+		creadorMago = ClasesMagos.valueOf(tipo.toUpperCase().trim()).getFactory();
 		return creadorMago.crearMago(batalla);
 	}
+	
+	public static Mortifago crearMortifago(String tipo, GestorBatalla batalla) 
+			throws IllegalArgumentException{
+		MortifagoFactory creadorMortifago;
+		creadorMortifago = ClasesMortifagos.valueOf(tipo.toUpperCase().trim()).getFactory();
+		return creadorMortifago.crearMortifago(batalla);
+	}
+	
 }
