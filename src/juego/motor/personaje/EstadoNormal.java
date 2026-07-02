@@ -1,7 +1,6 @@
 package juego.motor.personaje;
 
 import juego.motor.hechizo.Hechizo;
-import juego.motor.item.Item;
 
 public class EstadoNormal extends EfectoEstado{
 	
@@ -13,10 +12,6 @@ public class EstadoNormal extends EfectoEstado{
 		if(this.personaje.hechizosConocidos.contains(hechizo)) {
 			hechizo.ejecutar(objetivo);
 		}
-	}
-	
-	public void usarItem(Item item, Personaje objetivo) {	// Completar
-		
 	}
 	
 	public void recibirDaño(double cantidad) {	
