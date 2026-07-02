@@ -17,4 +17,6 @@ public abstract class EfectoEstado {
 	public abstract void recibirDaño(double cantidad);
 	
 	public abstract void curarse(double cantidad);
+	
+	public void actualizar() {};
 }

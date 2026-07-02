@@ -10,7 +10,7 @@ public class EstadoNormal extends EfectoEstado{
 	}
 	
 	public void lanzarHechizo(Hechizo hechizo, Personaje objetivo){
-		if(!this.personaje.hechizosConocidos.contains(hechizo)) {
+		if(this.personaje.hechizosConocidos.contains(hechizo)) {
 			hechizo.ejecutar(objetivo);
 		}
 	}

@@ -53,7 +53,8 @@ public class GestorBatalla {
     }
     
     public void gestionarTurno(Personaje turnoActual) {
-  
+    	turnoActual.aplicarEfectosDeTurno();
+    	hechizosUsadosEnRonda.clear();
         Hechizo hechizoAEjecutar = null;
         
         for (Hechizo h : turnoActual.getHechizosConocidos()) { 
@@ -87,6 +88,10 @@ public class GestorBatalla {
         turnoActual.lanzarHechizo(hechizoAEjecutar, objetivo);
         
         this.notificarHechizoLanzado(turnoActual, hechizoAEjecutar, objetivo);
+        if (objetivo.getPuntosVida() <= 0) { 
+            this.notificarPersonajeDerrotado(objetivo);
+            System.out.println("¡" + objetivo.getNombre() + " ha sido derrotado!");
+        }
 
         hechizosUsadosEnRonda.add(hechizoAEjecutar);
 
@@ -137,12 +142,12 @@ public class GestorBatalla {
             System.out.println("¡La batalla ha terminado en empate!");
         }
         
-        logEventos.mostrarHistorial();
+        //logEventos.mostrarHistorial();
     }
     
     private void ejecutarTurnoBandoMagos() {
         System.out.println("\nTurno del Bando de los Magos");
-        hechizosUsadosEnRonda.clear();
+        //hechizosUsadosEnRonda.clear();
         java.util.List<Personaje> magosATurnar = new java.util.ArrayList<>(bandoMagos.obtenerPersonajesVivos());
         for (Personaje mago : magosATurnar) {
             if (bandoMagos.obtenerPersonajesVivos().contains(mago) && !bandoMortifagos.obtenerPersonajesVivos().isEmpty()) {
@@ -153,7 +158,7 @@ public class GestorBatalla {
 
     private void ejecutarTurnoBandoMortifagos() {
         System.out.println("\nTurno del Bando de los Mortífagos");
-        hechizosUsadosEnRonda.clear(); 
+        //hechizosUsadosEnRonda.clear(); 
         java.util.List<Personaje> mortifagosATurnar = new java.util.ArrayList<>(bandoMortifagos.obtenerPersonajesVivos());
         for (Personaje mortifago : mortifagosATurnar) {
             if (bandoMortifagos.obtenerPersonajesVivos().contains(mortifago) && !bandoMagos.obtenerPersonajesVivos().isEmpty()) {

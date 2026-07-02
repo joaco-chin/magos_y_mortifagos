@@ -45,5 +45,23 @@ public abstract class Personaje {
 		this.estado = estado;
 	}
 	
+	public String getNombre() {
+		return nombre;
+	}
+
+	public List<Hechizo> getHechizosConocidos() {
+		return hechizosConocidos;
+	}
+
+	public double getPuntosVida() {
+		return puntosVida;
+	}
+
 	protected abstract void notificarDerrota();
+	
+	public void aplicarEfectosDeTurno() {
+	    if (this.estado != null) {
+	        this.estado.actualizar();
+	    }
+	}
 }

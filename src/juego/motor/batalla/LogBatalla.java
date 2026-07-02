@@ -24,6 +24,7 @@ public class LogBatalla implements BatallaObserver {
     }
 
     public void mostrarHistorial() {
+    	System.out.println("Historial de la batalla:");
     	for (String ataque : secuenciaAtaques) {
             System.out.println(ataque);
         }

@@ -28,6 +28,7 @@ public class Batallon implements BatallaObserver {
        
     @Override
     public void onPersonajeDerrotado(Personaje personaje) {
+    	this.miembros.remove(personaje);
     }
 
     @Override
