@@ -46,4 +46,16 @@ public abstract class Personaje {
 	}
 	
 	protected abstract void notificarDerrota();
+	
+	public double getPuntosVida() {
+		return this.puntosVida;
+	}
+	
+	public List<Hechizo> getHechizosConocidos(){
+		return this.hechizosConocidos;
+	}
+	
+	public String getNombre() {
+		return this.nombre;
+	}
 }

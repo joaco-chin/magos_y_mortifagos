@@ -15,6 +15,7 @@ public class GestorBatalla {
 	private Batallon bandoMagos;
     private Batallon bandoMortifagos;
     private LogBatalla logEventos;
+    
     private Map<Personaje, List<Hechizo>> historialMagia = new HashMap<>();
     private Set<Hechizo> hechizosUsadosEnRonda = new HashSet<>();
     private List<EfectoEstado> observerEstados = new ArrayList<>();
