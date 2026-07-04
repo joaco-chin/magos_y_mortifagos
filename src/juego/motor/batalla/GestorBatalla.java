@@ -42,10 +42,25 @@ public class GestorBatalla {
             }
         }
     }
+    
+    public void agregarObserver(BatallaObserver obs) {
+        this.observers.add(obs);
+    }
 
     public void gestionarTurno(Personaje turnoActual) {
         turnoActual.aplicarEfectosDeTurno();
         Hechizo hechizoAEjecutar = null;
+        
+        if (turnoActual.getPuntosVida() <= 0) {
+            notificarPersonajeDerrotado(turnoActual);
+            return;
+        }
+        
+        List<Personaje> aliadosMuertos = turnoActual.getBando().obtenerMuertos();
+        if (!aliadosMuertos.isEmpty() && turnoActual.tieneItem("PiedraFilosofal")) {
+            turnoActual.usarItem("PiedraFilosofal", aliadosMuertos.get(0));
+            return;
+        }
         
         List<Hechizo> disponibles = new ArrayList<>();
         for (Hechizo h : turnoActual.getHechizosConocidos()) {
@@ -61,11 +76,6 @@ public class GestorBatalla {
         if (hechizoAEjecutar == null) {
             System.out.println(turnoActual.getNombre() + " no tiene hechizos disponibles para este turno.");
             return;
-        }
-        
-        List<Personaje> aliadosMuertos = turnoActual.getBando().obtenerMuertos();
-        if (!aliadosMuertos.isEmpty() && turnoActual.tieneItem("PiedraFilosofal")) {
-            turnoActual.usarItem("PiedraFilosofal", aliadosMuertos.get(0));
         }
 
         Batallon bandoEnemigo = (bandoMagos.obtenerPersonajesVivos().contains(turnoActual)) ? bandoMortifagos : bandoMagos;

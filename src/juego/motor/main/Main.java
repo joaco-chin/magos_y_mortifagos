@@ -18,6 +18,7 @@ public class Main {
         Personaje hermione = Reclutador.crearMago("Hermione", "Profesor", batalla);
         Personaje neville = Reclutador.crearMago("Neville", "Estudiante", batalla);
         Personaje kingsley = Reclutador.crearMago("Kingsley", "Auror", batalla);
+        harry.equiparItem(new CapaInvisibilidad(harry));
 
         batallonMagos.agregarMiembro(harry);
         batallonMagos.agregarMiembro(hermione);
@@ -28,6 +29,7 @@ public class Main {
         Personaje lucius = Reclutador.crearMortifago("Lucius", "Comandante", batalla);
         Personaje crabbe = Reclutador.crearMortifago("Crabbe", "Seguidor_Comun", batalla);
         Personaje goyle = Reclutador.crearMortifago("Goyle", "Seguidor_Comun", batalla);
+        lucius.equiparItem(new PiedraFilosofal(harry));
 
         batallonMortifagos.agregarMiembro(bellatrix);
         batallonMortifagos.agregarMiembro(lucius);

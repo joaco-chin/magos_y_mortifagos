@@ -14,12 +14,13 @@ public class Comandante extends Mortifago implements BatallaObserver{
 		this.nivelMagia = nivelMagia;
 		this.maxPuntosVida = maxPuntosVida;
 		this.puntosVida = this.maxPuntosVida;
+		batalla.agregarObserver(this);
 	}
 	
 	@Override
     public void onPersonajeDerrotado(Personaje p) {
-        if (!this.esDelMismoBando(p) && p.getPuntosVida() <= 0) {
-            System.out.println(this.nombre + " entra en modo Furia al ver caer a un aliado !!!");
+        if (this.esDelMismoBando(p) && p != this && this.getPuntosVida() > 0) {
+            System.out.println(this.nombre + " entra en modo Furia al ver caer a un aliado!!!");
             this.nivelMagia *= 1.2;
         }
     }
