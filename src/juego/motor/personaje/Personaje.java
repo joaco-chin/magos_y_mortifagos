@@ -49,15 +49,23 @@ public abstract class Personaje {
 	}
 	
 	public void recibirDaño(double cantidad) {
-		this.estado.recibirDaño(cantidad);
+	    Object capa = inventario.stream()
+	            .filter(i -> i.getClass().getSimpleName().equals("CapaInvisibilidad"))
+	            .findFirst().orElse(null);
+
+	    if (capa != null && ((CapaInvisibilidad) capa).esquivar()) {
+	        System.out.println(this.nombre + " esquivó el ataque gracias a su capa!");
+	        return;
+	    }
+	    this.estado.recibirDaño(cantidad);
 	}
 	
 	public void curarse(double cantidad) {
-		this.estado.curarse(cantidad);
-		
-		if (this.puntosVida > 0 && this.estado instanceof EstadoDerrotado) {
+		if (this.estado instanceof EstadoDerrotado) {
 	        this.cambiarEstado(new EstadoNormal(this));
 	    }
+		
+		this.estado.curarse(cantidad);
 	}
 	
 	public void cambiarEstado(EfectoEstado estado) {
@@ -96,5 +104,9 @@ public abstract class Personaje {
 
 	public boolean esDelMismoBando(Personaje otro) {
 	    return this.bando != null && this.bando == otro.getBando();
+	}
+	
+	public boolean tieneAlgunItem() {
+	    return !inventario.isEmpty();
 	}
 }

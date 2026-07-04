@@ -11,13 +11,16 @@ import juego.motor.personaje.Personaje;
 public class GestorBatalla {
     private Batallon bandoMagos;
     private Batallon bandoMortifagos;
+
     private Map<Personaje, List<Hechizo>> historialMagia = new HashMap<>();
     private Set<String> hechizosUsadosEnTurno = new HashSet<>();
     private List<BatallaObserver> observers = new ArrayList<>();
 
-    public GestorBatalla(Batallon magos, Batallon mortifagos) {
+    public GestorBatalla(Batallon magos, Batallon mortifagos, LogBatalla log) {
         this.bandoMagos = magos;
         this.bandoMortifagos = mortifagos;
+        
+        this.observers.add(log);
         this.observers.add(magos);
         this.observers.add(mortifagos);
     }
@@ -56,11 +59,14 @@ public class GestorBatalla {
             return;
         }
         
-        List<Personaje> aliadosMuertos = turnoActual.getBando().obtenerMuertos();
-        if (!aliadosMuertos.isEmpty() && turnoActual.tieneItem("PiedraFilosofal")) {
-            turnoActual.usarItem("PiedraFilosofal", aliadosMuertos.get(0));
-            return;
+        if (turnoActual.tieneItem("PiedraFilosofal") && Math.random() < 0.5) {
+            List<Personaje> aliadosMuertos = turnoActual.getBando().obtenerMuertos();
+            if (!aliadosMuertos.isEmpty()) {
+                turnoActual.usarItem("PiedraFilosofal", aliadosMuertos.get(0));
+                return;
+            }
         }
+
         
         List<Hechizo> disponibles = new ArrayList<>();
         for (Hechizo h : turnoActual.getHechizosConocidos()) {

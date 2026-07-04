@@ -1,7 +1,6 @@
 package juego.motor.main;
 
-import juego.motor.batalla.Batallon;
-import juego.motor.batalla.GestorBatalla;
+import juego.motor.batalla.*;
 import juego.motor.personaje.*;
 
 public class Main {
@@ -12,13 +11,14 @@ public class Main {
 
         Batallon batallonMagos = new Batallon();
         Batallon batallonMortifagos = new Batallon();
-        GestorBatalla batalla = new GestorBatalla(batallonMagos, batallonMortifagos);
+        LogBatalla logBatalla = new LogBatalla();
+        GestorBatalla batalla = new GestorBatalla(batallonMagos, batallonMortifagos, logBatalla);
 
         Personaje harry = Reclutador.crearMago("Harry", "Auror", batalla);
         Personaje hermione = Reclutador.crearMago("Hermione", "Profesor", batalla);
         Personaje neville = Reclutador.crearMago("Neville", "Estudiante", batalla);
         Personaje kingsley = Reclutador.crearMago("Kingsley", "Auror", batalla);
-        harry.equiparItem(new CapaInvisibilidad(harry));
+        harry.equiparItem(new CapaInvisibilidad());
 
         batallonMagos.agregarMiembro(harry);
         batallonMagos.agregarMiembro(hermione);
@@ -29,7 +29,7 @@ public class Main {
         Personaje lucius = Reclutador.crearMortifago("Lucius", "Comandante", batalla);
         Personaje crabbe = Reclutador.crearMortifago("Crabbe", "Seguidor_Comun", batalla);
         Personaje goyle = Reclutador.crearMortifago("Goyle", "Seguidor_Comun", batalla);
-        lucius.equiparItem(new PiedraFilosofal(harry));
+        lucius.equiparItem(new PiedraFilosofal(lucius));
 
         batallonMortifagos.agregarMiembro(bellatrix);
         batallonMortifagos.agregarMiembro(lucius);
