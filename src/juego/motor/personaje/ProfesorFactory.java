@@ -9,7 +9,7 @@ import juego.motor.hechizo.Hechizo;
 import juego.motor.hechizo.HechizoFactory;
 
 public class ProfesorFactory implements MagoFactory{
-	public Mago crearMago(GestorBatalla batalla) {
+	public Mago crearMago(String nombre, GestorBatalla batalla) {
 		List<Hechizo> hechizosConocidos = new LinkedList<>();
 		
 		for(String nombreHechizo : ConfigPersonajes.PROFESOR_HECHIZOS) {
@@ -18,7 +18,7 @@ public class ProfesorFactory implements MagoFactory{
 			hechizosConocidos.add(nuevoHechizo);
 		}
 		
-		return new Profesor("Profesor", 
+		return new Profesor(nombre, 
 				batalla, hechizosConocidos, 
 				ConfigPersonajes.PROFESOR_NIVEL_MAGIA, 
 				ConfigPersonajes.PROFESOR_MAX_VIDA);

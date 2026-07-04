@@ -10,7 +10,7 @@ import juego.motor.hechizo.HechizoFactory;
 
 public class ComandanteFactory implements MortifagoFactory{
 
-	public Mortifago crearMortifago(GestorBatalla batalla) {
+	public Mortifago crearMortifago(String nombre, GestorBatalla batalla) {
 		List<Hechizo> hechizosConocidos = new LinkedList<>();
 		
 		for(String nombreHechizo : ConfigPersonajes.COMANDANTE_HECHIZOS) {
@@ -19,7 +19,7 @@ public class ComandanteFactory implements MortifagoFactory{
 			hechizosConocidos.add(nuevoHechizo);
 		}
 		
-		return new Comandante("Comandante", 
+		return new Comandante(nombre, 
 				batalla, hechizosConocidos, 
 				ConfigPersonajes.COMANDANTE_NIVEL_MAGIA, 
 				ConfigPersonajes.COMANDANTE_MAX_VIDA);

@@ -29,7 +29,7 @@ public class PersonajesTest {
     @Test
     public void testReclutadorCreaMagoCorrectamente() {
         // Ejecución: Probamos enviando minúsculas y espacios para validar el .toUpperCase().trim()
-        Mago magoReclutado = Reclutador.crearMago("  auror  ", batallaDummy);
+        Mago magoReclutado = Reclutador.crearMago("Alguien", "  auror  ", batallaDummy);
 
         // Verificaciones
         assertNotNull(magoReclutado, "El mago reclutado no debería ser null.");
@@ -40,7 +40,7 @@ public class PersonajesTest {
     @Test
     public void testReclutadorCreaMortifagoCorrectamente() {
         // Ejecución
-        Mortifago mortifagoReclutado = Reclutador.crearMortifago("comandante", batallaDummy);
+        Mortifago mortifagoReclutado = Reclutador.crearMortifago("Alguien", "comandante", batallaDummy);
 
         // Verificaciones
         assertNotNull(mortifagoReclutado, "El mortífago reclutado no debería ser null.");
@@ -55,14 +55,14 @@ public class PersonajesTest {
     public void testReclutadorMagoLanzaExcepcionSiTipoNoExiste() {
         // Verificamos que salte IllegalArgumentException ante un tipo inválido como "Muggle"
         assertThrows(IllegalArgumentException.class, () -> {
-            Reclutador.crearMago("Muggle", batallaDummy);
+            Reclutador.crearMago("Alguien", "Muggle", batallaDummy);
         }, "Debería lanzar IllegalArgumentException si el tipo de mago no existe en el Enum.");
     }
 
     @Test
     public void testReclutadorMortifagoLanzaExcepcionSiTipoNoExiste() {
         assertThrows(IllegalArgumentException.class, () -> {
-            Reclutador.crearMortifago("Infiltrado", batallaDummy);
+            Reclutador.crearMortifago("Alguien" ,"Infiltrado", batallaDummy);
         }, "Debería lanzar IllegalArgumentException si el tipo de mortífago no existe en el Enum.");
     }
 
@@ -93,21 +93,11 @@ public class PersonajesTest {
         public MagoTestImpl(String nombre, GestorBatalla batalla) {
             super(nombre, batalla);
         }
-
-        @Override
-        protected void notificarDerrota() {
-            // No requiere lógica para verificar herencia de constructor
-        }
     }
 
     private static class MortifagoTestImpl extends Mortifago {
         public MortifagoTestImpl(String nombre, GestorBatalla batalla) {
             super(nombre, batalla);
-        }
-
-        @Override
-        protected void notificarDerrota() {
-            // No requiere lógica para verificar herencia de constructor
         }
     }
 }

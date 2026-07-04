@@ -12,6 +12,7 @@ public class Batallon implements BatallaObserver {
 
     public void agregarMiembro(Personaje personaje) {
     		miembros.add(personaje);
+    		personaje.setBando(this);
     }
     
     public List<Personaje> obtenerPersonajesVivos() {
@@ -25,10 +26,21 @@ public class Batallon implements BatallaObserver {
         
         return personajesVivos;
     }
+    
+    public List<Personaje> obtenerMuertos() {
+        List<Personaje> muertos = new ArrayList<>();
+        for (Personaje p : miembros) {
+            if (p.getPuntosVida() <= 0) muertos.add(p);
+        }
+        return muertos;
+    }
+    
+    public void reincorporar(Personaje p) {
+        System.out.println(p.getNombre() + " ha vuelto al combate!");
+    }
        
     @Override
     public void onPersonajeDerrotado(Personaje personaje) {
-    	this.miembros.remove(personaje);
     }
 
     @Override

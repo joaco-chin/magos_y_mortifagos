@@ -1,5 +1,4 @@
 package juego.motor.personaje;
-
 import juego.motor.hechizo.Hechizo;
 
 public class EstadoNormal extends EfectoEstado{
@@ -18,11 +17,9 @@ public class EstadoNormal extends EfectoEstado{
 		double nuevosPuntosVida = this.personaje.puntosVida - cantidad;
 		if(nuevosPuntosVida > Personaje.PUNTOS_DERROTA) {
 			this.personaje.puntosVida = nuevosPuntosVida;
-		}
-		else {
+		} else {
 			this.personaje.puntosVida = Personaje.PUNTOS_DERROTA;
 			this.personaje.cambiarEstado(new EstadoDerrotado(personaje));
-			this.personaje.notificarDerrota();
 		}
 	}
 	
@@ -30,8 +27,7 @@ public class EstadoNormal extends EfectoEstado{
 		double nuevosPuntosVida = this.personaje.puntosVida + cantidad;
 		if(nuevosPuntosVida < this.personaje.maxPuntosVida) {
 			this.personaje.puntosVida = nuevosPuntosVida;
-		}
-		else {
+		} else {
 			this.personaje.puntosVida = personaje.maxPuntosVida;
 		}
 	}

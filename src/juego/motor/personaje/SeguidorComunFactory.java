@@ -10,7 +10,7 @@ import juego.motor.hechizo.HechizoFactory;
 
 public class SeguidorComunFactory implements MortifagoFactory{
 	
-	public Mortifago crearMortifago(GestorBatalla batalla) {
+	public Mortifago crearMortifago(String nombre, GestorBatalla batalla) {
 		List<Hechizo> hechizosConocidos = new LinkedList<>();
 		
 		for(String nombreHechizo : ConfigPersonajes.SEGUIDOR_COMUN_HECHIZOS) {
@@ -19,7 +19,7 @@ public class SeguidorComunFactory implements MortifagoFactory{
 			hechizosConocidos.add(nuevoHechizo);
 		}
 		
-		return new SeguidorComun("SeguidorComun", 
+		return new SeguidorComun(nombre, 
 				batalla, hechizosConocidos, 
 				ConfigPersonajes.SEGUIDOR_COMUN_NIVEL_MAGIA, 
 				ConfigPersonajes.SEGUIDOR_COMUN_MAX_VIDA);

@@ -24,8 +24,8 @@ class EfectoDurableTest {
         LogBatalla log = new LogBatalla();
         batalla = new GestorBatalla(magos, mortifagos, log);
 
-        estudiante = Reclutador.crearMago("Estudiante", batalla);
-        comandante = Reclutador.crearMortifago("Comandante", batalla);
+        estudiante = Reclutador.crearMago("Harry", "Estudiante", batalla);
+        comandante = Reclutador.crearMortifago("Lucius", "Comandante", batalla);
     }
 
     @Test

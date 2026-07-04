@@ -1,10 +1,9 @@
 package juego.motor.personaje;
-
 import java.util.List;
-
-import juego.motor.batalla.BatallaObserver;
+import java.util.ArrayList;
 import juego.motor.batalla.GestorBatalla;
 import juego.motor.hechizo.Hechizo;
+import juego.motor.batalla.*;
 
 public abstract class Personaje {
 	public static final int PUNTOS_DERROTA = 0;
@@ -14,9 +13,10 @@ public abstract class Personaje {
 	protected double puntosVida;
 	protected double maxPuntosVida;
 	protected List<Hechizo> hechizosConocidos;
+	private List<Object> inventario = new ArrayList<>();
 	protected EfectoEstado estado;
-	protected BatallaObserver observer;
 	protected final GestorBatalla batalla;
+	protected Batallon bando;
 	
 	public Personaje(String nombre, GestorBatalla batalla) {
 		this.nombre = nombre;
@@ -24,15 +24,47 @@ public abstract class Personaje {
 		this.batalla = batalla;
 	}
 	
+	public void equiparItem(Object item) {
+        this.inventario.add(item);
+    }
+	
+	public boolean tieneItem(String nombreItem) {
+        return inventario.stream().anyMatch(i -> i.getClass().getSimpleName().equals(nombreItem));
+    }
+
+    public void usarItem(String nombreItem, Personaje objetivo) {
+        Object item = inventario.stream()
+                .filter(i -> i.getClass().getSimpleName().equals(nombreItem))
+                .findFirst()
+                .orElse(null);
+
+        if (item instanceof PiedraFilosofal) {
+            ((PiedraFilosofal) item).usar(this, objetivo);
+            inventario.remove(item);
+        }
+    }
+	
 	public void lanzarHechizo(Hechizo hechizo, Personaje objetivo) {
 		this.estado.lanzarHechizo(hechizo, objetivo);
 	}
 	
 	public void recibirDaño(double cantidad) {
-		this.estado.recibirDaño(cantidad);
+	    Object capa = inventario.stream()
+	            .filter(i -> i.getClass().getSimpleName().equals("CapaInvisibilidad"))
+	            .findFirst().orElse(null);
+
+	    if (capa != null && ((CapaInvisibilidad) capa).esquivar()) {
+	        System.out.println(this.nombre + " esquivó el ataque gracias a su capa!");
+	        return;
+	    }
+	    this.estado.recibirDaño(cantidad);
 	}
 	
 	public void curarse(double cantidad) {
+		if (this.estado instanceof EstadoDerrotado) {
+	        this.cambiarEstado(new EstadoNormal(this));
+	    }
+		
 		this.estado.curarse(cantidad);
 	}
 	
@@ -40,14 +72,12 @@ public abstract class Personaje {
 		this.estado = estado;
 	}
 	
-	protected abstract void notificarDerrota();
-	
-
 	public void aplicarEfectosDeTurno() {
 	    if (this.estado != null) {
 	        this.estado.actualizar();
 	    }
 	}
+	
 	public double getPuntosVida() {
 		return this.puntosVida;
 	}
@@ -58,6 +88,25 @@ public abstract class Personaje {
 	
 	public String getNombre() {
 		return this.nombre;
+	}
+	
+	public GestorBatalla getGestorBatalla() {
+		return this.batalla;
+	}
+	
+	public void setBando(Batallon bando) {
+		this.bando = bando;
+	}
+	
+	public Batallon getBando() {
+		return this.bando;
+		}
 
+	public boolean esDelMismoBando(Personaje otro) {
+	    return this.bando != null && this.bando == otro.getBando();
+	}
+	
+	public boolean tieneAlgunItem() {
+	    return !inventario.isEmpty();
 	}
 }

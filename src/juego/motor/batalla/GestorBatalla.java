@@ -1,69 +1,82 @@
 package juego.motor.batalla;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import juego.motor.hechizo.Hechizo;
-import juego.motor.personaje.EfectoEstado;
 import juego.motor.personaje.Personaje;
 
 public class GestorBatalla {
-	private Batallon bandoMagos;
+    private Batallon bandoMagos;
     private Batallon bandoMortifagos;
-    private LogBatalla logEventos;
-    
+
     private Map<Personaje, List<Hechizo>> historialMagia = new HashMap<>();
-    private Set<Hechizo> hechizosUsadosEnRonda = new HashSet<>();
-    private List<EfectoEstado> observerEstados = new ArrayList<>();
-    
+    private Set<String> hechizosUsadosEnTurno = new HashSet<>();
     private List<BatallaObserver> observers = new ArrayList<>();
-    
+
     public GestorBatalla(Batallon magos, Batallon mortifagos, LogBatalla log) {
         this.bandoMagos = magos;
         this.bandoMortifagos = mortifagos;
-        this.logEventos = log;
         
         this.observers.add(log);
         this.observers.add(magos);
         this.observers.add(mortifagos);
-        
     }
-    
-    public void agregarObserver(EfectoEstado observer) {
-        this.observerEstados.add(observer);
-    }
-    
-    public void eliminarObserver(EfectoEstado observer) {
-        this.observerEstados.remove(observer);
-    }
-    
+
     public void notificarPersonajeDerrotado(Personaje p) {
-    		for (BatallaObserver obs : observers) {
+        for (BatallaObserver obs : observers) {
             obs.onPersonajeDerrotado(p);
         }
     }
-    
+
     public void notificarHechizoLanzado(Personaje lanzador, Hechizo h, Personaje objetivo) {
         for (BatallaObserver obs : observers) {
             obs.onHechizoLanzado(lanzador, h, objetivo);
         }
     }
     
+    public void aplicarDaño(Personaje atacante, Personaje objetivo, double daño) {
+        objetivo.recibirDaño(daño);
+        if (objetivo.getPuntosVida() <= 0) {
+            for (BatallaObserver obs : this.observers) {
+                obs.onPersonajeDerrotado(objetivo);
+            }
+        }
+    }
+    
+    public void agregarObserver(BatallaObserver obs) {
+        this.observers.add(obs);
+    }
+
     public void gestionarTurno(Personaje turnoActual) {
-    	turnoActual.aplicarEfectosDeTurno();
-    	hechizosUsadosEnRonda.clear();
+        turnoActual.aplicarEfectosDeTurno();
         Hechizo hechizoAEjecutar = null;
         
-        for (Hechizo h : turnoActual.getHechizosConocidos()) { 
-            
-            if (!hechizosUsadosEnRonda.contains(h)) {
-                hechizoAEjecutar = h;
-                break; 
+        if (turnoActual.getPuntosVida() <= 0) {
+            notificarPersonajeDerrotado(turnoActual);
+            return;
+        }
+        
+        if (turnoActual.tieneItem("PiedraFilosofal") && Math.random() < 0.5) {
+            List<Personaje> aliadosMuertos = turnoActual.getBando().obtenerMuertos();
+            if (!aliadosMuertos.isEmpty()) {
+                turnoActual.usarItem("PiedraFilosofal", aliadosMuertos.get(0));
+                return;
             }
+        }
+
+        
+        List<Hechizo> disponibles = new ArrayList<>();
+        for (Hechizo h : turnoActual.getHechizosConocidos()) {
+            if (!hechizosUsadosEnTurno.contains(h.getClass().getSimpleName())) {
+                disponibles.add(h);
+            }
+        }
+        
+        if (!disponibles.isEmpty()) {
+            hechizoAEjecutar = disponibles.get(new java.util.Random().nextInt(disponibles.size()));
         }
 
         if (hechizoAEjecutar == null) {
@@ -73,47 +86,43 @@ public class GestorBatalla {
 
         Batallon bandoEnemigo = (bandoMagos.obtenerPersonajesVivos().contains(turnoActual)) ? bandoMortifagos : bandoMagos;
         List<Personaje> enemigosVivos = bandoEnemigo.obtenerPersonajesVivos();
-
  
         if (enemigosVivos.isEmpty()) {
             return;
         }
         
-        Personaje objetivo = enemigosVivos.get(0); 
-        
+        Personaje objetivo = enemigosVivos.get(0);
         String nombreHechizo = hechizoAEjecutar.getClass().getSimpleName();
+        
         if (nombreHechizo.equals("Protego") || nombreHechizo.equals("ExpectoPatronum")) {
-            objetivo = turnoActual; 
+            objetivo = turnoActual;
         }
 
         turnoActual.lanzarHechizo(hechizoAEjecutar, objetivo);
-        
         this.notificarHechizoLanzado(turnoActual, hechizoAEjecutar, objetivo);
+        
         if (objetivo.getPuntosVida() <= 0) { 
             this.notificarPersonajeDerrotado(objetivo);
             System.out.println("¡" + objetivo.getNombre() + " ha sido derrotado!");
         }
 
-        hechizosUsadosEnRonda.add(hechizoAEjecutar);
+        hechizosUsadosEnTurno.add(nombreHechizo);
 
         if (!historialMagia.containsKey(turnoActual)) {
             historialMagia.put(turnoActual, new ArrayList<>());
         }
-
         historialMagia.get(turnoActual).add(hechizoAEjecutar);
     }
-    
+
     public void iniciarBatalla() {
         System.out.println("\n========================================");
         System.out.println("            COMIENZA LA BATALLA           ");
         System.out.println("========================================");
         int nroRonda = 1;
-        int maxRondas = 10;
+        int maxRondas = 100;
       
-        while (!bandoMagos.obtenerPersonajesVivos().isEmpty() && !bandoMortifagos.obtenerPersonajesVivos().isEmpty() && nroRonda <= maxRondas) 
-        {
+        while (!bandoMagos.obtenerPersonajesVivos().isEmpty() && !bandoMortifagos.obtenerPersonajesVivos().isEmpty() && nroRonda <= maxRondas) {
             System.out.println("\nRONDA " + nroRonda);
-            
             boolean empiezanMagos = Math.random() < 0.5;
 
             if (empiezanMagos) {
@@ -127,7 +136,6 @@ public class GestorBatalla {
                     ejecutarTurnoBandoMagos();
                 }
             }
-
             nroRonda++;
         }
 
@@ -142,13 +150,11 @@ public class GestorBatalla {
         } else {
             System.out.println("¡La batalla ha terminado en empate!");
         }
-        
-        //logEventos.mostrarHistorial();
     }
-    
+
     private void ejecutarTurnoBandoMagos() {
         System.out.println("\nTurno del Bando de los Magos");
-        //hechizosUsadosEnRonda.clear();
+        hechizosUsadosEnTurno.clear();
         java.util.List<Personaje> magosATurnar = new java.util.ArrayList<>(bandoMagos.obtenerPersonajesVivos());
         for (Personaje mago : magosATurnar) {
             if (bandoMagos.obtenerPersonajesVivos().contains(mago) && !bandoMortifagos.obtenerPersonajesVivos().isEmpty()) {
@@ -159,7 +165,7 @@ public class GestorBatalla {
 
     private void ejecutarTurnoBandoMortifagos() {
         System.out.println("\nTurno del Bando de los Mortífagos");
-        //hechizosUsadosEnRonda.clear(); 
+        hechizosUsadosEnTurno.clear();
         java.util.List<Personaje> mortifagosATurnar = new java.util.ArrayList<>(bandoMortifagos.obtenerPersonajesVivos());
         for (Personaje mortifago : mortifagosATurnar) {
             if (bandoMortifagos.obtenerPersonajesVivos().contains(mortifago) && !bandoMagos.obtenerPersonajesVivos().isEmpty()) {
@@ -167,6 +173,4 @@ public class GestorBatalla {
             }
         }
     }
-   
-
 }
