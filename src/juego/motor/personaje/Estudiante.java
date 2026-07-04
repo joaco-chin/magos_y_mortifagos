@@ -15,9 +15,4 @@ public class Estudiante extends Mago{
 		this.maxPuntosVida = maxPuntosVida;
 		this.puntosVida = this.maxPuntosVida; 
 	}
-
-	@Override
-	protected void notificarDerrota() {
-		
-	}
 }

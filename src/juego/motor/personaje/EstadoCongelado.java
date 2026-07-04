@@ -6,7 +6,7 @@ public class EstadoCongelado extends EfectoDurable{
 
 	public EstadoCongelado(Personaje personaje) {
 		super(personaje);
-		this.duracionTurnos = EfectoDurable.DURACION_BASE_TURNOS;
+		this.duracionTurnos = EfectoDurable.DURACION_BASE_TURNOS + 1;
 	}
 	
 	@Override

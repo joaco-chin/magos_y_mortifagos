@@ -90,9 +90,5 @@ public class BatallonTest {
             this.puntosVida = vidaInicial;
         }
 
-        @Override
-        protected void notificarDerrota() {
-            // No requiere lógica para el test de Batallon
-        }
     }
 }

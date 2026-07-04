@@ -116,8 +116,5 @@ public class HechizoTest {
             return this.estado;
         }
 
-        @Override
-        protected void notificarDerrota() {
-        }
     }
 }

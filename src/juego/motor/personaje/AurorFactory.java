@@ -9,7 +9,7 @@ import juego.motor.hechizo.Hechizo;
 import juego.motor.hechizo.HechizoFactory;
 
 public class AurorFactory implements MagoFactory{
-	public Mago crearMago(GestorBatalla batalla) {
+	public Mago crearMago(String nombre, GestorBatalla batalla) {
 		List<Hechizo> hechizosConocidos = new LinkedList<>();
 		
 		for(String nombreHechizo : ConfigPersonajes.AUROR_HECHIZOS) {
@@ -18,7 +18,7 @@ public class AurorFactory implements MagoFactory{
 			hechizosConocidos.add(nuevoHechizo);
 		}
 		
-		return new Auror("Auror", 
+		return new Auror(nombre, 
 				batalla, hechizosConocidos, 
 				ConfigPersonajes.AUROR_NIVEL_MAGIA, 
 				ConfigPersonajes.AUROR_MAX_VIDA);

@@ -15,10 +15,5 @@ public class Auror extends Mago{
 		this.maxPuntosVida = maxPuntosVida;
 		this.puntosVida = this.maxPuntosVida;
 	}
-
-	@Override
-	protected void notificarDerrota() {
-		// TODO Auto-generated method stub
-	}
 	
 }

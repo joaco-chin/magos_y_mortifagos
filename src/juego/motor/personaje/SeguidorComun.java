@@ -15,9 +15,4 @@ public class SeguidorComun extends Mortifago{
 		this.maxPuntosVida = maxPuntosVida;
 		this.puntosVida = this.maxPuntosVida;
 	}
-
-	@Override
-	protected void notificarDerrota() {
-		// TODO Auto-generated method stub
-	}
 }
