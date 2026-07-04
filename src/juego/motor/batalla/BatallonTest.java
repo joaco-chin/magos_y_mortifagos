@@ -53,20 +53,21 @@ public class BatallonTest {
     }
 
     @Test
-    public void testOnPersonajeDerrotadoRemueveMiembro() {
-        // Configuración inicial
+    public void testOnPersonajeDerrotadoNoPurgaAlMiembro() {
         batallon.agregarMiembro(personajeVivo1);
         batallon.agregarMiembro(personajeVivo2);
-        
-        // Ejecución: Simulamos que el Gestor de Batalla notifica la derrota de Harry
+
+        // Simulamos que Harry cae en combate de verdad (PV a 0)
+        personajeVivo1.recibirDaño(1000);
         batallon.onPersonajeDerrotado(personajeVivo1);
-        
+
         List<Personaje> vivos = batallon.obtenerPersonajesVivos();
-        
-        // Verificaciones
-        assertEquals(1, vivos.size(), "El tamaño total de miembros debió reducirse a 1.");
-        assertFalse(vivos.contains(personajeVivo1), "Harry debió ser removido por completo de la lista interna.");
+        List<Personaje> muertos = batallon.obtenerMuertos();
+
+        assertFalse(vivos.contains(personajeVivo1), "Harry no debe contar como vivo con 0 PV.");
         assertTrue(vivos.contains(personajeVivo2), "Hermione debería seguir en el batallón.");
+        assertTrue(muertos.contains(personajeVivo1), 
+            "Harry debe seguir presente en el batallón para poder ser encontrado por obtenerMuertos() y revivido con un objeto mágico.");
     }
 
     @Test
